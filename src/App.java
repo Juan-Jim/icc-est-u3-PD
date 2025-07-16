@@ -10,7 +10,7 @@ public class App {
         EjerciciosPD ejerciciosPD = new EjerciciosPD();
         System.out.println("Fibonaci Recursivo");
         long start = System.nanoTime();
-        long resultado = ejerciciosPD.getFibonacci(5);
+        long resultado = ejerciciosPD.getFibonacci(50);
         long end = System.nanoTime();
         long duration = end - start;
         System.out.println("Resultado = " + resultado + " en tiempo = " + duration);
@@ -18,7 +18,7 @@ public class App {
 
         System.out.println("Fibonaci Recursivo Caching ");
         start = System.nanoTime();
-        resultado = ejerciciosPD.getFibonacci(100);
+        resultado = ejerciciosPD.getFibonacciPD(50);
         end = System.nanoTime();
         duration = end - start;
         System.out.println("Resultado = " + resultado + " en tiempo = " + duration);
