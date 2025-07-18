@@ -16,13 +16,13 @@ public class MazeSolverRecursivo implements MazeSolver.MazeSolverStrategy {
 
     private boolean findPath(boolean[][] grid, Cell current, Cell end, List<Cell> path) {
         int row = current.row;
-        int col = current.col;
+        int col = current.getCol();
 
         if (row < 0 || col < 0 || row >= grid.length || col >= grid[0].length || !grid[row][col]) {
             return false;
         }
 
-        if (row == end.row && col == end.col) {
+        if (row == end.row && col == end.getCol()) {
             path.add(0, current);
             return true;
         }

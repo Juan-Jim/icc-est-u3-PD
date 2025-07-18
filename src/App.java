@@ -1,54 +1,79 @@
-
-import java.util.Arrays;
 import java.util.List;
-
-
+import java.util.Set;
 
 public class App {
-    public static void main(String[] args) throws Exception {
-        //runEjercciosPD();
+    public static void main(String[] args) {
         runMaze();
     }
 
-    //private static void runEjercciosPD() {
-        // EjerciciosPD ejerciciosPD = new EjerciciosPD();
-        // System.out.println("Fibonaci Recursivo");
-        // long start = System.nanoTime();
-        // long resultado = ejerciciosPD.getFibonacci(50);
-        // long end = System.nanoTime();
-        // long duration = end - start;
-        // System.out.println("Resultado = " + resultado + " en tiempo = " + duration);
-
-
-        // System.out.println("Fibonaci Recursivo Caching ");
-        // start = System.nanoTime();
-        // resultado = ejerciciosPD.getFibonacciPD(50);
-        // end = System.nanoTime();
-        // duration = end - start;
-        // System.out.println("Resultado = " + resultado + " en tiempo = " + duration);
-
-    private static void runMaze() { 
+    private static void runMaze() {
         boolean[][] predefinedMaze = {
             {true, true, true, true},
             {false, true, true, true},
             {true, true, false, false},
-            {true, true, true, true},
+            {true, true, true, true}
         };
 
         Maze maze = new Maze(predefinedMaze);
-        System.out.println("Laberinto cargado");
+        System.out.println("Juan Jimenez");
+        System.out.println("Laberinto cargado:");
         maze.printMaze();
+        System.out.println();
 
         Cell start = new Cell(0, 0);
         Cell end = new Cell(3, 3);
 
-         List<MazeSolver.MazeSolverStrategy> solvers = Arrays.asList(
-            new MazeSolverRecursivo()
-        );
+        MazeSolverRecursivoCompletBT solver = new MazeSolverRecursivoCompletBT();
+        MazeResult result = (MazeResult) solver.getPath(maze.getMaze(), start, end);
+        List<Cell> path = result.getPath();
+        
+        if (!path.isEmpty()) {
+            System.out.println("Camino encontrado:");
+            System.out.println(path);
+            System.out.println();
 
-        MazeSolver.MazeSolverStrategy solver = solvers.get(0);
-        List<Cell> path = solver.getPath(predefinedMaze, start, end);
-        System.out.println("Camino encontrado:");
-        System.out.println(path);
+            // Mostrar laberinto con celdas visitadas
+            System.out.println("Laberinto con las celdas visitadas:");
+            printVisitedMaze(maze.getMaze(), result.getVisitedCells());
+            System.out.println();
+
+            // Mostrar laberinto con el camino recorrido
+            System.out.println("Laberinto con el camino recorrido:");
+            printPathMaze(maze.getMaze(), path);
+        } else {
+            System.out.println("No se encontró camino.");
+        }
+    }
+
+    private static void printVisitedMaze(boolean[][] maze, Set<Cell> visitedCells) {
+        for (int i = 0; i < maze.length; i++) {
+            for (int j = 0; j < maze[i].length; j++) {
+                Cell current = new Cell(i, j);
+                if (!maze[i][j]) {
+                    System.out.print("* ");
+                } else if (visitedCells.contains(current)) {
+                    System.out.print("> ");
+                } else {
+                    System.out.print("- ");
+                }
+            }
+            System.out.println();
+        }
+    }
+
+    private static void printPathMaze(boolean[][] maze, List<Cell> path) {
+        for (int i = 0; i < maze.length; i++) {
+            for (int j = 0; j < maze[i].length; j++) {
+                Cell current = new Cell(i, j);
+                if (!maze[i][j]) {
+                    System.out.print("* ");
+                } else if (path.contains(current)) {
+                    System.out.print("> ");
+                } else {
+                    System.out.print("- ");
+                }
+            }
+            System.out.println();
+        }
     }
 }

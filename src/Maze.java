@@ -1,6 +1,3 @@
-import java.util.Arrays;
-import java.util.List;
-
 public class Maze {
     private boolean[][] maze;
 
@@ -8,26 +5,21 @@ public class Maze {
         this.maze = maze;
     }
 
+    public boolean[][] getMaze() {
+        return maze;
+    }
+
     public void printMaze() {
-        for (boolean[] i : maze) {
-            for (boolean cell : i) {
+        for (boolean[] row : maze) {
+            for (boolean cell : row) {
                 System.out.print(cell ? "- " : "* ");
             }
             System.out.println();
         }
     }
 
-    public boolean[][] getMaze() {
-        return maze;
-    }
-
+    // ✅ Interfaz actualizada para devolver MazeResult en lugar de List<Cell>
     public interface MazeSolver {
-        List<Cell> getPath(boolean[][] grid, Cell start, Cell end);
-
-    }
-
-    @Override
-    public String toString() {
-        return "Maze [maze=" + Arrays.toString(maze) + "]";
+        MazeResult getPath(boolean[][] grid, Cell start, Cell end);
     }
 }
